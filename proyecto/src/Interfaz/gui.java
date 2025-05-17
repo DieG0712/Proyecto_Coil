@@ -69,7 +69,7 @@ public class gui extends JFrame {
 		}
 		{
 			comboBox = new JComboBox();
-			comboBox.setModel(new DefaultComboBoxModel(new String[] {"Camisa", "Pantalon", "Frutas", "Carne", "Microondas", "Refrigeradora"}));
+			comboBox.setModel(new DefaultComboBoxModel(new String[] {"Electrodomesticos", "Alimentos", "Ropa"}));
 			comboBox.setBounds(125, 7, 121, 22);
 			contentPane.add(comboBox);
 		}
