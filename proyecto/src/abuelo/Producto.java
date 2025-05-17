@@ -27,9 +27,10 @@ public abstract class Producto {
 	public void setCantStok(int cantStok) {
 		this.cantStok = cantStok;
 	}
-	public abstract String Comprar();
-	public abstract String Devolver();
-	public abstract boolean Devolucion();
+	
+	//metodos para registrar
+	 public abstract String registrar();  
+	 public abstract String mostrarInfo();
 	
 }
 

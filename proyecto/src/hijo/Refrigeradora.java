@@ -4,6 +4,8 @@ import padre.Electrodomesticos;
 
 public class Refrigeradora extends Electrodomesticos {
 	
+	
+	//ISMAEL CORRIGE CRJO
 	public Refrigeradora(String nomProducto, double precio, int cantStok, String marca,
 			String modelo, int garantia) {
 		super(nomProducto, precio, cantStok, marca, modelo, garantia);
