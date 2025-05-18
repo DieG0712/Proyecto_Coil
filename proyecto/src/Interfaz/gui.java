@@ -10,7 +10,11 @@ import javax.swing.border.EmptyBorder;
 import abuelo.Producto;
 import arreglo.Arreglo_Productos;
 import hijo.Camisa;
+import hijo.Carne;
+import hijo.Frutas;
+import hijo.Microondas;
 import hijo.Pantalon;
+import hijo.Refrigeradora;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -238,6 +242,54 @@ public class gui extends JFrame implements ActionListener, ItemListener {
 			btnNewButton_1.setBounds(127, 316, 187, 23);
 			contentPane.add(btnNewButton_1);
 		}
+		{
+			lblNewLabel_14 = new JLabel("Fecha de Vencimiento:");
+			lblNewLabel_14.setBounds(240, 204, 136, 14);
+			contentPane.add(lblNewLabel_14);
+		}
+		{
+			txtFeVenciAlimentos = new JTextField();
+			txtFeVenciAlimentos.setEditable(false);
+			txtFeVenciAlimentos.setBounds(372, 201, 86, 20);
+			contentPane.add(txtFeVenciAlimentos);
+			txtFeVenciAlimentos.setColumns(10);
+		}
+		{
+			lblNewLabel_15 = new JLabel("Peso:");
+			lblNewLabel_15.setBounds(468, 204, 46, 14);
+			contentPane.add(lblNewLabel_15);
+		}
+		{
+			txtPesoAlimentos = new JTextField();
+			txtPesoAlimentos.setEditable(false);
+			txtPesoAlimentos.setBounds(510, 201, 86, 20);
+			contentPane.add(txtPesoAlimentos);
+			txtPesoAlimentos.setColumns(10);
+		}
+		{
+			lblNewLabel_16 = new JLabel("Conservación:");
+			lblNewLabel_16.setBounds(606, 204, 93, 14);
+			contentPane.add(lblNewLabel_16);
+		}
+		{
+			txtConserAlimentos = new JTextField();
+			txtConserAlimentos.setEditable(false);
+			txtConserAlimentos.setBounds(692, 201, 86, 20);
+			contentPane.add(txtConserAlimentos);
+			txtConserAlimentos.setColumns(10);
+		}
+		{
+			lblNewLabel_17 = new JLabel("Nombre de la Alimento:");
+			lblNewLabel_17.setBounds(10, 204, 136, 14);
+			contentPane.add(lblNewLabel_17);
+		}
+		{
+			txtNomAlimento = new JTextField();
+			txtNomAlimento.setEditable(false);
+			txtNomAlimento.setBounds(144, 201, 86, 20);
+			contentPane.add(txtNomAlimento);
+			txtNomAlimento.setColumns(10);
+		}
 	}
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnNewButton_1) {
@@ -249,6 +301,14 @@ public class gui extends JFrame implements ActionListener, ItemListener {
 	}
 	private JButton btnNewButton_1;
 	private JTextArea txtS;
+	private JLabel lblNewLabel_14;
+	private JTextField txtFeVenciAlimentos;
+	private JLabel lblNewLabel_15;
+	private JTextField txtPesoAlimentos;
+	private JLabel lblNewLabel_16;
+	private JTextField txtConserAlimentos;
+	private JLabel lblNewLabel_17;
+	private JTextField txtNomAlimento;
 	void Imprimir(String s)
 	{
 		txtS.append(s+"\n");
@@ -278,7 +338,20 @@ public class gui extends JFrame implements ActionListener, ItemListener {
 		Producto prod = null;
 		switch (posi) {
 		case 0://Electrodomesticos
+			String marcaele = txtMarcaElectro.getText();
+			String modeloele = txtModeloElectro.getText();
+			String garantia = txtGarantiaElectro.getText();
 			
+			if(nomProducto.equalsIgnoreCase("Microondas"))
+			{
+				prod = new Microondas(nomProducto, precio, cantStock, marcaele, modeloele, cantStock);
+				Listado(prod);
+			}
+			else if (nomProducto.equalsIgnoreCase("Refrigeradora"))
+			{
+				prod = new Refrigeradora(nomProducto, precio, cantStock, marcaele, modeloele, cantStock);
+				Listado(prod);
+			}
 			break;
 		case 1://Ropa
 			double talla = Double.parseDouble(txtTallaRopa.getText());
@@ -297,13 +370,31 @@ public class gui extends JFrame implements ActionListener, ItemListener {
 				Listado(prod);
 			}
 			else {
-	            JOptionPane.showMessageDialog(null, "Nombre de prenda no válida. Escribe 'Camisa' o 'Pantalon' en el nombre.");
+	            JOptionPane.showMessageDialog(null, "Nombre de prenda no válida. Por ahora solo se puede registrar 'Camisa' o 'Pantalon'.");
 	            return;
 	        }
 			break;
 
-		default://Alimentos
+		case 2://Alimentos
+			String FechaVencimiento = txtFeVenciAlimentos.getText();
+			double peso = Double.parseDouble(txtPesoAlimentos.getText());
+			String conserva = txtConserAlimentos.getText();
+			String nomAlime = txtNomAlimento.getText();
 			
+			if(nomProducto.equalsIgnoreCase("Frutas"))
+			{
+				prod = new Frutas(nomProducto, precio, cantStock, FechaVencimiento, peso, conserva, nomAlime);
+				Listado(prod);
+			}
+			else if (nomProducto.equalsIgnoreCase("Carne"))
+			{
+				prod = new Carne(nomProducto, precio, cantStock, FechaVencimiento, peso, conserva, nomAlime);
+				Listado(prod);
+			}
+			else {
+	            JOptionPane.showMessageDialog(null, "Nombre de Alimento no válido. Por ahora solo se puede registrar 'Frutas' o 'Carne'.");
+	            return;
+	        }
 			break;
 		}
 		
@@ -319,7 +410,7 @@ public class gui extends JFrame implements ActionListener, ItemListener {
 	}
 	protected void do_comboBox_itemStateChanged(ItemEvent e) 
 	{
-		Limpiar();
+		
 		Desactivar();
 		int posi = cboProducto.getSelectedIndex();
 		switch (posi) {
@@ -327,15 +418,62 @@ public class gui extends JFrame implements ActionListener, ItemListener {
 			txtMarcaElectro.setEditable(true);
 			txtModeloElectro.setEditable(true);
 			txtGarantiaElectro.setEditable(true);
+			txtNomProducto.setText("");
+			txtPrecioProducto.setText("");
+			txtCantStock.setText("");
+			txtMarcaElectro.setText("");
+			txtModeloElectro.setText("");
+			txtGarantiaElectro.setText("");
+			txtNomAlimento.setText("");
+			txtFeVenciAlimentos.setText("");
+			txtPesoAlimentos.setText("");
+			txtConserAlimentos.setText("");
+			txtTallaRopa.setText("");
+			txtColorRopa.setText("");
+			txtMarcaRopa.setText("");
+			txtModeloRopa.setText("");
+			
 			break;
 		case 1://Ropa
 			txtTallaRopa.setEditable(true);
 			txtColorRopa.setEditable(true);
 			txtMarcaRopa.setEditable(true);
 			txtModeloRopa.setEditable(true);
+			txtNomProducto.setText("");
+			txtPrecioProducto.setText("");
+			txtCantStock.setText("");
+			txtMarcaElectro.setText("");
+			txtModeloElectro.setText("");
+			txtGarantiaElectro.setText("");
+			txtNomAlimento.setText("");
+			txtFeVenciAlimentos.setText("");
+			txtPesoAlimentos.setText("");
+			txtConserAlimentos.setText("");
+			txtTallaRopa.setText("");
+			txtColorRopa.setText("");
+			txtMarcaRopa.setText("");
+			txtModeloRopa.setText("");
 			break;
 
 		default://Alimentos
+			txtFeVenciAlimentos.setEditable(true);
+			txtPesoAlimentos.setEditable(true);
+			txtConserAlimentos.setEditable(true);
+			txtNomAlimento.setEditable(true);
+			txtNomProducto.setText("");
+			txtPrecioProducto.setText("");
+			txtCantStock.setText("");
+			txtMarcaElectro.setText("");
+			txtModeloElectro.setText("");
+			txtGarantiaElectro.setText("");
+			txtNomAlimento.setText("");
+			txtFeVenciAlimentos.setText("");
+			txtPesoAlimentos.setText("");
+			txtConserAlimentos.setText("");
+			txtTallaRopa.setText("");
+			txtColorRopa.setText("");
+			txtMarcaRopa.setText("");
+			txtModeloRopa.setText("");
 			
 			break;
 		}
@@ -349,9 +487,15 @@ public class gui extends JFrame implements ActionListener, ItemListener {
 		txtColorRopa.setEditable(false);
 		txtMarcaRopa.setEditable(false);
 		txtModeloRopa.setEditable(false);
+		txtFeVenciAlimentos.setEditable(false);
+		txtPesoAlimentos.setEditable(false);
+		txtConserAlimentos.setEditable(false);
+		txtNomAlimento.setEditable(false);
+		
 	}
 	void Limpiar()
 	{
 		txtS.setText("");
 	}
 }
+
